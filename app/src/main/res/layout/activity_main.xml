@@ -5,18 +5,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
+
     <TextView
         android:id="@+id/titleTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
         android:text="단위 변환기"
         android:textSize="40sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/categoryRadioGroup"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="packed"
-        android:layout_marginBottom="40dp"/>
+        app:layout_constraintVertical_chainStyle="packed" />
+
     <RadioGroup
         android:id="@+id/categoryRadioGroup"
         android:layout_width="wrap_content"
@@ -25,8 +27,7 @@
         app:layout_constraintBottom_toTopOf="@id/unitSelectLayer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/titleTextView"
-        >
+        app:layout_constraintTop_toBottomOf="@id/titleTextView">
 
         <RadioButton
             android:id="@+id/lengthRadioBtn"
@@ -35,15 +36,6 @@
             android:layout_weight="1"
             android:paddingEnd="13dp"
             android:text="길이"
-            android:textSize="15sp" />
-
-        <RadioButton
-            android:id="@+id/speedRadioBtn"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:paddingEnd="13dp"
-            android:text="속도"
             android:textSize="15sp" />
 
         <RadioButton
@@ -71,6 +63,15 @@
             android:layout_weight="1"
             android:paddingEnd="13dp"
             android:text="온도"
+            android:textSize="15sp" />
+
+        <RadioButton
+            android:id="@+id/weightRadioBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingEnd="13dp"
+            android:text="무게"
             android:textSize="15sp" />
     </RadioGroup>
 
