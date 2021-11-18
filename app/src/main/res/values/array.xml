@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="length_values">
+        <item>mm</item>
+        <item>cm</item>
+        <item>m</item>
+        <item>km</item>
+        <item>inch</item>
+    </string-array>
+    <string-array name="volume_values">
+        <item>mL</item>
+        <item>L</item>
+    </string-array>
+    <string-array name="time_values">
+        <item>밀리초</item>
+        <item>초</item>
+        <item>분</item>
+        <item>시</item>
+    </string-array>
+    <string-array name="temperature_values">
+        <item>섭씨(℃)</item>
+        <item>화씨(°F)</item>
+    </string-array>
+    <string-array name="weight_values">
+        <item>mg</item>
+        <item>g</item>
+        <item>kg</item>
+        <item>t</item>
+        <item>lb</item>
+    </string-array>
+</resources>
