@@ -114,20 +114,22 @@
             android:text="="
             android:textSize="30sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/unit2EditText"
+            app:layout_constraintEnd_toStartOf="@id/unitTextView"
             app:layout_constraintStart_toEndOf="@id/unit1EditText"
             app:layout_constraintTop_toTopOf="@id/unit1EditText" />
 
-        <EditText
-            android:id="@+id/unit2EditText"
+        <TextView
+            android:id="@+id/unitTextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:padding="15dp"
             app:layout_constraintBottom_toTopOf="@+id/unit2Spinner"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toEndOf="@id/equalTextView"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0"
             app:layout_constraintVertical_chainStyle="packed" />
 
         <Spinner
@@ -136,8 +138,8 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@id/unit2EditText"
-            app:layout_constraintStart_toStartOf="@id/unit2EditText"
-            app:layout_constraintTop_toBottomOf="@+id/unit2EditText" />
+            app:layout_constraintEnd_toEndOf="@id/unitTextView"
+            app:layout_constraintStart_toStartOf="@id/unitTextView"
+            app:layout_constraintTop_toBottomOf="@+id/unitTextView" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

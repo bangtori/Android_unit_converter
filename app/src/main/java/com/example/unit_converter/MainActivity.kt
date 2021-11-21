@@ -23,8 +23,8 @@ class MainActivity : AppCompatActivity() {
     private val unit1EditText : EditText by lazy{
         findViewById<EditText>(R.id.unit1EditText)
     }
-    private val unit2EditText : EditText by lazy{
-        findViewById<EditText>(R.id.unit2EditText)
+    private val unit2EditText : TextView by lazy{
+        findViewById<TextView>(R.id.unitTextView)
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,6 +65,7 @@ class MainActivity : AppCompatActivity() {
 
             }
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                // 입력 예외 처리
                 val text : String = unit1EditText.getText().toString()
                 if (!isDigitsOnly(p0)){ //숫자가 아닌 문자가 포함될 경우
                     unit1EditText.setText("")
@@ -99,11 +100,11 @@ class MainActivity : AppCompatActivity() {
             unit2Spinner.adapter = adapter
         }
     }
-    private fun defaultSetting(spinner1Index:Int, editText1Value:String, spinner2Index:Int, editText2Value:String){
+    private fun defaultSetting(spinner1Index:Int, editText1Value:String, spinner2Index:Int, TextViewValue:String){
         unit1Spinner.setSelection(spinner1Index)
         unit1EditText.setText(editText1Value)
         unit2Spinner.setSelection(spinner2Index)
-        unit2EditText.setText(editText2Value)
+        unit2EditText.setText(TextViewValue)
     }
 }
 
