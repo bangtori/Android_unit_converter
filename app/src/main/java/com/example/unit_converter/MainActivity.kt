@@ -26,12 +26,17 @@ class MainActivity : AppCompatActivity() {
     private val unit2EditText : TextView by lazy{
         findViewById<TextView>(R.id.unitTextView)
     }
+    //라디오 버튼 체크 값 저장 변수
+    private var checkedId : Int = R.id.lengthRadioBtn
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        //라디오 버튼
+        //라디오 버튼 디폴트값 설정하기
+        categoryRadioGroup.check(R.id.lengthRadioBtn)
+        defaultSetting(2,"1",1,"100")
+
+        //카테고리 내용 연결 (라디오버튼 -> 스피너 연결)
         categoryRadioGroup.setOnCheckedChangeListener{ group, checkId ->
-            //카테고리 내용 연결 (라디오버튼 -> 스피너 연결)
             when(checkId){
                 R.id.lengthRadioBtn->{
                     spinnerConnect(R.array.length_values)
