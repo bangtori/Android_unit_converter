@@ -2,11 +2,13 @@ package com.example.unit_converter
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.ArrayAdapter
-import android.widget.EditText
-import android.widget.RadioGroup
-import android.widget.Spinner
+import android.text.Editable
+import android.text.TextUtils.isDigitsOnly
+import android.text.TextWatcher
+import android.widget.*
+import androidx.core.text.isDigitsOnly
 import java.util.*
+import kotlin.text.substring as substring1
 
 class MainActivity : AppCompatActivity() {
     private val unit1Spinner: Spinner by lazy{
@@ -53,6 +55,36 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+
+        //EditText 값 변경 이벤트 처리
+        unit1EditText.addTextChangedListener(object : TextWatcher{
+            override fun afterTextChanged(p0: Editable?) {
+
+            }
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                val text : String = unit1EditText.getText().toString()
+                if (!isDigitsOnly(p0)){ //숫자가 아닌 문자가 포함될 경우
+                    unit1EditText.setText("")
+                    Toast.makeText(this@MainActivity, "숫자만 입력 가능합니다.", Toast.LENGTH_SHORT).show()
+                    return
+                }
+                if(text.length > 1 && text.substring1(0,1)=="0"){
+                    // 숫자 0은 가능하지만 01, 023등은 불가능함
+                    unit1EditText.setText(text.subSequence(1, text.length))
+                    unit1EditText.setSelection(unit1EditText.length())
+                    Toast.makeText(this@MainActivity, "맨 앞 0은 생략합니다.",Toast.LENGTH_SHORT).show()
+                    return
+                }else if (text.isNotEmpty() && text.length >10){ //10자리 이상 입력 불가
+                    unit1EditText.setText(text.subSequence(0,p1))
+                    unit1EditText.setSelection(unit1EditText.length())
+                    Toast.makeText(this@MainActivity, "10자리까지 입력 가능합니다.", Toast.LENGTH_SHORT).show()
+                    return
+                }
+            }
+        })
     }
     private fun spinnerConnect(arrayName:Int){
         ArrayAdapter.createFromResource(
@@ -73,4 +105,8 @@ class MainActivity : AppCompatActivity() {
         unit2Spinner.setSelection(spinner2Index)
         unit2EditText.setText(editText2Value)
     }
+}
+
+private fun EditText.onTextChanged(function: () -> Unit) {
+
 }
