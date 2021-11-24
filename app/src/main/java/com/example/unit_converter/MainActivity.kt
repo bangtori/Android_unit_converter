@@ -31,8 +31,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        //라디오 버튼 디폴트값 설정하기
+        //라디오 버튼 & 스피너 디폴트값 설정하기
         categoryRadioGroup.check(R.id.lengthRadioBtn)
+        spinnerConnect(R.array.length_values)
         defaultSetting(2,"1",1,"100")
 
         //카테고리 내용 연결 (라디오버튼 -> 스피너 연결)
