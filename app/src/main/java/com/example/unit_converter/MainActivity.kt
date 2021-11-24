@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
     private val unit1EditText : EditText by lazy{
         findViewById<EditText>(R.id.unit1EditText)
     }
-    private val unit2EditText : TextView by lazy{
+    private val unitTextView : TextView by lazy{
         findViewById<TextView>(R.id.unitTextView)
     }
     //라디오 버튼 체크 값 저장 변수
@@ -37,6 +37,7 @@ class MainActivity : AppCompatActivity() {
 
         //카테고리 내용 연결 (라디오버튼 -> 스피너 연결)
         categoryRadioGroup.setOnCheckedChangeListener{ group, checkId ->
+            checkedId = checkId
             when(checkId){
                 R.id.lengthRadioBtn->{
                     spinnerConnect(R.array.length_values)
@@ -71,23 +72,45 @@ class MainActivity : AppCompatActivity() {
             }
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 // 입력 예외 처리
-                val text : String = unit1EditText.getText().toString()
                 if (!isDigitsOnly(p0)){ //숫자가 아닌 문자가 포함될 경우
                     unit1EditText.setText("")
                     Toast.makeText(this@MainActivity, "숫자만 입력 가능합니다.", Toast.LENGTH_SHORT).show()
                     return
                 }
-                if(text.length > 1 && text.substring1(0,1)=="0"){
-                    // 숫자 0은 가능하지만 01, 023등은 불가능함
-                    unit1EditText.setText(text.subSequence(1, text.length))
-                    unit1EditText.setSelection(unit1EditText.length())
-                    Toast.makeText(this@MainActivity, "맨 앞 0은 생략합니다.",Toast.LENGTH_SHORT).show()
-                    return
-                }else if (text.isNotEmpty() && text.length >10){ //10자리 이상 입력 불가
-                    unit1EditText.setText(text.subSequence(0,p1))
-                    unit1EditText.setSelection(unit1EditText.length())
-                    Toast.makeText(this@MainActivity, "10자리까지 입력 가능합니다.", Toast.LENGTH_SHORT).show()
-                    return
+                if( unit1EditText.getText().toString().equals("")||unit1EditText.getText().toString() == null){
+                    unitTextView.setText("")
+                }
+                else{
+                    val text : String = unit1EditText.getText().toString()
+                    if(text.length > 1 && text.substring1(0,1)=="0"){
+                        // 숫자 0은 가능하지만 01, 023등은 불가능함
+                        unit1EditText.setText(text.subSequence(1, text.length))
+                        unit1EditText.setSelection(unit1EditText.length())
+                        Toast.makeText(this@MainActivity, "맨 앞 0은 생략합니다.",Toast.LENGTH_SHORT).show()
+                        return
+                    }else if (text.isNotEmpty() && text.length >10){ //10자리 이상 입력 불가
+                        unit1EditText.setText(text.subSequence(0,p1))
+                        unit1EditText.setSelection(unit1EditText.length())
+                        Toast.makeText(this@MainActivity, "10자리까지 입력 가능합니다.", Toast.LENGTH_SHORT).show()
+                        return
+                    }
+                    when(checkedId){
+                        R.id.lengthRadioBtn->{
+                            lengthConverter(unit1Spinner.selectedItem.toString(), unit2Spinner.selectedItem.toString(), text)
+                        }
+                        R.id.volumeRadioBtn->{
+
+                        }
+                        R.id.timeRadioBtn->{
+
+                        }
+                        R.id.temperatureRadioBtn->{
+
+                        }
+                        R.id.weightRadioBtn->{
+
+                        }
+                    }
                 }
             }
         })
@@ -109,10 +132,55 @@ class MainActivity : AppCompatActivity() {
         unit1Spinner.setSelection(spinner1Index)
         unit1EditText.setText(editText1Value)
         unit2Spinner.setSelection(spinner2Index)
-        unit2EditText.setText(TextViewValue)
+        unitTextView.setText(TextViewValue)
     }
-}
-
-private fun EditText.onTextChanged(function: () -> Unit) {
-
+    private fun lengthConverter(unit1 : String, unit2 : String, value : String){
+        when(unit1){
+            "mm" -> {
+                when (unit2) {
+                    "mm" -> unitTextView.setText(value)
+                    "cm" -> unitTextView.setText("${value.toInt() * 0.1}")
+                    "m" -> unitTextView.setText("${value.toInt() * 0.001}")
+                    "km" -> unitTextView.setText("${value.toInt() * 0.000001}")
+                    "inch" -> unitTextView.setText("${value.toInt() * 0.0393701}")
+                }
+            }
+            "cm"->{
+                when (unit2) {
+                    "mm" -> unitTextView.setText("${value.toInt() * 10}")
+                    "cm" -> unitTextView.setText(value)
+                    "m" -> unitTextView.setText("${value.toInt() * 0.01}")
+                    "km" -> unitTextView.setText("${value.toInt() * 0.00001}")
+                    "inch" -> unitTextView.setText("${value.toInt() * 0.393701}")
+                }
+            }
+            "m"->{
+                when (unit2) {
+                    "mm" -> unitTextView.setText("${value.toInt() * 1000}")
+                    "cm" -> unitTextView.setText("${value.toInt() * 100}")
+                    "m" -> unitTextView.setText(value)
+                    "km" -> unitTextView.setText("${value.toInt() * 0.00001}")
+                    "inch" -> unitTextView.setText("${value.toInt() * 0.393701}")
+                }
+            }
+            "km"->{
+                when (unit2) {
+                    "mm" -> unitTextView.setText("${value.toInt() * 1000000}")
+                    "cm" -> unitTextView.setText("${value.toInt() * 100000}")
+                    "m" -> unitTextView.setText("${value.toInt() * 1000}")
+                    "km" -> unitTextView.setText(value)
+                    "inch" -> unitTextView.setText("${value.toInt() * 39370.1}")
+                }
+            }
+            "inch" -> {
+                when (unit2) {
+                    "mm" -> unitTextView.setText("${value.toInt() * 25.4}")
+                    "cm" -> unitTextView.setText("${value.toInt() * 2.54}")
+                    "m" -> unitTextView.setText("${value.toInt() * 0.0254}")
+                    "km" -> unitTextView.setText("${value.toInt() * 0.0000254}")
+                    "inch" -> unitTextView.setText(value)
+                }
+            }
+        }
+    }
 }
