@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils.isDigitsOnly
 import android.text.TextWatcher
+import android.view.View
 import android.widget.*
 import androidx.core.text.isDigitsOnly
 import java.util.*
@@ -95,26 +96,42 @@ class MainActivity : AppCompatActivity() {
                         Toast.makeText(this@MainActivity, "10자리까지 입력 가능합니다.", Toast.LENGTH_SHORT).show()
                         return
                     }
-                    when(checkedId){
-                        R.id.lengthRadioBtn->{
-                            lengthConverter(unit1Spinner.selectedItem.toString(), unit2Spinner.selectedItem.toString(), text)
-                        }
-                        R.id.volumeRadioBtn->{
-                            volumeConverter(unit1Spinner.selectedItem.toString(), unit2Spinner.selectedItem.toString(), text)
-                        }
-                        R.id.timeRadioBtn->{
-                            timeConverter(unit1Spinner.selectedItem.toString(), unit2Spinner.selectedItem.toString(), text)
-                        }
-                        R.id.temperatureRadioBtn->{
-                            temperatureConverter(unit1Spinner.selectedItem.toString(), unit2Spinner.selectedItem.toString(), text)
-                        }
-                        R.id.weightRadioBtn->{
-                            weightConverter(unit1Spinner.selectedItem.toString(), unit2Spinner.selectedItem.toString(), text)
-                        }
-                    }
+                    converterOnRadioBtn(text)
                 }
             }
         })
+        // 스피너 변경 이벤트 처리
+        unit1Spinner.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                converterOnRadioBtn(unit1EditText.getText().toString())
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+                Toast.makeText(this@MainActivity, "단위를 선택해주세요.", Toast.LENGTH_SHORT)
+                return
+            }
+        }
+        unit2Spinner.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                converterOnRadioBtn(unit1EditText.getText().toString())
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+                Toast.makeText(this@MainActivity, "단위를 선택해주세요.", Toast.LENGTH_SHORT)
+                return
+            }
+        }
+
     }
     private fun spinnerConnect(arrayName:Int){
         ArrayAdapter.createFromResource(
@@ -134,6 +151,25 @@ class MainActivity : AppCompatActivity() {
         unit1EditText.setText(editText1Value)
         unit2Spinner.setSelection(spinner2Index)
         unitTextView.setText(TextViewValue)
+    }
+    private fun converterOnRadioBtn(text:String){
+        when(checkedId){
+            R.id.lengthRadioBtn->{
+                lengthConverter(unit1Spinner.selectedItem.toString(), unit2Spinner.selectedItem.toString(), text)
+            }
+            R.id.volumeRadioBtn->{
+                volumeConverter(unit1Spinner.selectedItem.toString(), unit2Spinner.selectedItem.toString(), text)
+            }
+            R.id.timeRadioBtn->{
+                timeConverter(unit1Spinner.selectedItem.toString(), unit2Spinner.selectedItem.toString(), text)
+            }
+            R.id.temperatureRadioBtn->{
+                temperatureConverter(unit1Spinner.selectedItem.toString(), unit2Spinner.selectedItem.toString(), text)
+            }
+            R.id.weightRadioBtn->{
+                weightConverter(unit1Spinner.selectedItem.toString(), unit2Spinner.selectedItem.toString(), text)
+            }
+        }
     }
     private fun lengthConverter(unit1 : String, unit2 : String, value : String){
         when(unit1){
