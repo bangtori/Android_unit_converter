@@ -1,11 +1,14 @@
 package com.example.unit_converter
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils.isDigitsOnly
 import android.text.TextWatcher
+import android.view.MotionEvent
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.core.text.isDigitsOnly
 import java.util.*
@@ -29,6 +32,7 @@ class MainActivity : AppCompatActivity() {
     }
     //라디오 버튼 체크 값 저장 변수
     private var checkedId : Int = R.id.lengthRadioBtn
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -133,6 +137,13 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
+    //키보드 내리기 이벤트 메서드
+    override fun onTouchEvent(event: MotionEvent): Boolean {
+        val imm: InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
+        return true
+    }
+
     private fun spinnerConnect(arrayName:Int){
         ArrayAdapter.createFromResource(
             this,
