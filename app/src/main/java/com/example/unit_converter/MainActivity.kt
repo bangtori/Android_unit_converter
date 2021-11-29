@@ -77,19 +77,13 @@ class MainActivity : AppCompatActivity() {
 
             }
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                // 입력 예외 처리
-                if (!isDigitsOnly(p0)){ //숫자가 아닌 문자가 포함될 경우
-                    unit1EditText.setText("")
-                    Toast.makeText(this@MainActivity, "숫자만 입력 가능합니다.", Toast.LENGTH_SHORT).show()
-                    return
-                }
                 if( unit1EditText.getText().toString().equals("")||unit1EditText.getText().toString() == null){
                     unitTextView.setText("")
                 }
                 else{
                     val text : String = unit1EditText.getText().toString()
-                    if(text.length > 1 && text.substring1(0,1)=="0"){
-                        // 숫자 0은 가능하지만 01, 023등은 불가능함
+                    if(text.length > 1 && text.substring1(0,1)=="0" && text.substring1(1,2)!="."){
+                        // 숫자 0은 가능하지만 01, 023등은 불가능함, 소수점0.a 는 가능
                         unit1EditText.setText(text.subSequence(1, text.length))
                         unit1EditText.setSelection(unit1EditText.length())
                         Toast.makeText(this@MainActivity, "맨 앞 0은 생략합니다.",Toast.LENGTH_SHORT).show()
@@ -187,45 +181,45 @@ class MainActivity : AppCompatActivity() {
             "mm" -> {
                 when (unit2) {
                     "mm" -> unitTextView.setText(value)
-                    "cm" -> unitTextView.setText("${value.toInt() * 0.1}")
-                    "m" -> unitTextView.setText("${value.toInt() * 0.001}")
-                    "km" -> unitTextView.setText("${value.toInt() * 1e-6}")
-                    "inch" -> unitTextView.setText("${value.toInt() * 0.0393701}")
+                    "cm" -> unitTextView.setText("${value.toDouble() * 0.1}")
+                    "m" -> unitTextView.setText("${value.toDouble() * 0.001}")
+                    "km" -> unitTextView.setText("${value.toDouble() * 1e-6}")
+                    "inch" -> unitTextView.setText("${value.toDouble() * 0.0393701}")
                 }
             }
             "cm"->{
                 when (unit2) {
-                    "mm" -> unitTextView.setText("${value.toInt() * 10}")
+                    "mm" -> unitTextView.setText("${value.toDouble() * 10}")
                     "cm" -> unitTextView.setText(value)
-                    "m" -> unitTextView.setText("${value.toInt() * 0.01}")
-                    "km" -> unitTextView.setText("${value.toInt() * 1e-5}")
-                    "inch" -> unitTextView.setText("${value.toInt() * 0.393701}")
+                    "m" -> unitTextView.setText("${value.toDouble() * 0.01}")
+                    "km" -> unitTextView.setText("${value.toDouble() * 1e-5}")
+                    "inch" -> unitTextView.setText("${value.toDouble() * 0.393701}")
                 }
             }
             "m"->{
                 when (unit2) {
-                    "mm" -> unitTextView.setText("${value.toInt() * 1000}")
-                    "cm" -> unitTextView.setText("${value.toInt() * 100}")
+                    "mm" -> unitTextView.setText("${value.toDouble() * 1000}")
+                    "cm" -> unitTextView.setText("${value.toDouble() * 100}")
                     "m" -> unitTextView.setText(value)
-                    "km" -> unitTextView.setText("${value.toInt() * 0.001}")
-                    "inch" -> unitTextView.setText("${value.toInt() * 0.393701}")
+                    "km" -> unitTextView.setText("${value.toDouble() * 0.001}")
+                    "inch" -> unitTextView.setText("${value.toDouble() * 0.393701}")
                 }
             }
             "km"->{
                 when (unit2) {
-                    "mm" -> unitTextView.setText("${value.toInt() * 1e+6}")
-                    "cm" -> unitTextView.setText("${value.toInt() * 100000}")
-                    "m" -> unitTextView.setText("${value.toInt() * 1000}")
+                    "mm" -> unitTextView.setText("${value.toDouble() * 1e+6}")
+                    "cm" -> unitTextView.setText("${value.toDouble() * 100000}")
+                    "m" -> unitTextView.setText("${value.toDouble() * 1000}")
                     "km" -> unitTextView.setText(value)
-                    "inch" -> unitTextView.setText("${value.toInt() * 39370.1}")
+                    "inch" -> unitTextView.setText("${value.toDouble() * 39370.1}")
                 }
             }
             "inch" -> {
                 when (unit2) {
-                    "mm" -> unitTextView.setText("${value.toInt() * 25.4}")
-                    "cm" -> unitTextView.setText("${value.toInt() * 2.54}")
-                    "m" -> unitTextView.setText("${value.toInt() * 0.0254}")
-                    "km" -> unitTextView.setText("${value.toInt() * 2.54e-5}")
+                    "mm" -> unitTextView.setText("${value.toDouble() * 25.4}")
+                    "cm" -> unitTextView.setText("${value.toDouble() * 2.54}")
+                    "m" -> unitTextView.setText("${value.toDouble() * 0.0254}")
+                    "km" -> unitTextView.setText("${value.toDouble() * 2.54e-5}")
                     "inch" -> unitTextView.setText(value)
                 }
             }
@@ -236,12 +230,12 @@ class MainActivity : AppCompatActivity() {
             "mL" -> {
                 when(unit2){
                     "mL" -> unitTextView.setText(value)
-                    "L" -> unitTextView.setText("${value.toInt()*0.001}")
+                    "L" -> unitTextView.setText("${value.toDouble()*0.001}")
                 }
             }
             "L"->{
                 when(unit2){
-                    "mL"->unitTextView.setText("${value.toInt()*1000}")
+                    "mL"->unitTextView.setText("${value.toDouble()*1000}")
                 }
             }
         }
@@ -251,32 +245,32 @@ class MainActivity : AppCompatActivity() {
             "밀리초"->{
                 when(unit2){
                     "밀리초" -> unitTextView.setText(value)
-                    "초" -> unitTextView.setText("${value.toInt()*0.001}")
-                    "분" -> unitTextView.setText("${value.toInt()*1.6667e-5}")
-                    "시" -> unitTextView.setText("${value.toInt()*2.7778e-7}")
+                    "초" -> unitTextView.setText("${value.toDouble()*0.001}")
+                    "분" -> unitTextView.setText("${value.toDouble()*1.6667e-5}")
+                    "시" -> unitTextView.setText("${value.toDouble()*2.7778e-7}")
                 }
             }
             "초"->{
                 when(unit2){
-                    "밀리초" -> unitTextView.setText("${value.toInt()*1000}")
+                    "밀리초" -> unitTextView.setText("${value.toDouble()*1000}")
                     "초" -> unitTextView.setText(value)
-                    "분" -> unitTextView.setText("${value.toInt()*0.0166667}")
-                    "시" -> unitTextView.setText("${value.toInt()*2.7778e-4}")
+                    "분" -> unitTextView.setText("${value.toDouble()*0.0166667}")
+                    "시" -> unitTextView.setText("${value.toDouble()*2.7778e-4}")
                 }
             }
             "분"->{
                 when(unit2){
-                    "밀리초" -> unitTextView.setText("${value.toInt()*60000}")
-                    "초" -> unitTextView.setText("${value.toInt()*60}")
+                    "밀리초" -> unitTextView.setText("${value.toDouble()*60000}")
+                    "초" -> unitTextView.setText("${value.toDouble()*60}")
                     "분" -> unitTextView.setText(value)
-                    "시" -> unitTextView.setText("${value.toInt()*0.0166667}")
+                    "시" -> unitTextView.setText("${value.toDouble()*0.0166667}")
                 }
             }
             "시"->{
                 when(unit2){
-                    "밀리초" -> unitTextView.setText("${value.toInt()*3.6e+6}")
-                    "초" -> unitTextView.setText("${value.toInt()*3600}")
-                    "분" -> unitTextView.setText("${value.toInt()*60}")
+                    "밀리초" -> unitTextView.setText("${value.toDouble()*3.6e+6}")
+                    "초" -> unitTextView.setText("${value.toDouble()*3600}")
+                    "분" -> unitTextView.setText("${value.toDouble()*60}")
                     "시" -> unitTextView.setText(value)
                 }
             }
@@ -287,12 +281,12 @@ class MainActivity : AppCompatActivity() {
             "섭씨(℃)"->{
                 when(unit2){
                     "섭씨(℃)"->unitTextView.setText(value)
-                    "화씨(°F)"->unitTextView.setText("${(value.toInt()*9/5)+32}")
+                    "화씨(°F)"->unitTextView.setText("${(value.toDouble()*9/5)+32}")
                 }
             }
             "화씨(°F)"->{
                 when(unit2){
-                    "섭씨(℃)"->unitTextView.setText("${(value.toInt()-32)*5/9}")
+                    "섭씨(℃)"->unitTextView.setText("${(value.toDouble()-32)*5/9}")
                     "화씨(°F)"->unitTextView.setText(value)
                 }
             }
@@ -303,45 +297,45 @@ class MainActivity : AppCompatActivity() {
             "mg"->{
                 when(unit2){
                     "mg"->unitTextView.setText(value)
-                    "g"->unitTextView.setText("${value.toInt()*0.001}")
-                    "kg"->unitTextView.setText("${value.toInt()*1e-6}")
-                    "t"->unitTextView.setText("${value.toInt()*1e-9}")
-                    "lb"->unitTextView.setText("${value.toInt()*2.2046e-6}")
+                    "g"->unitTextView.setText("${value.toDouble()*0.001}")
+                    "kg"->unitTextView.setText("${value.toDouble()*1e-6}")
+                    "t"->unitTextView.setText("${value.toDouble()*1e-9}")
+                    "lb"->unitTextView.setText("${value.toDouble()*2.2046e-6}")
                 }
             }
             "g"->{
                 when(unit2){
-                    "mg"->unitTextView.setText("${value.toInt()*1000}")
+                    "mg"->unitTextView.setText("${value.toDouble()*1000}")
                     "g"->unitTextView.setText(value)
-                    "kg"->unitTextView.setText("${value.toInt()*0.001}")
-                    "t"->unitTextView.setText("${value.toInt()*1e-6}")
-                    "lb"->unitTextView.setText("${value.toInt()*2.2046e-3}")
+                    "kg"->unitTextView.setText("${value.toDouble()*0.001}")
+                    "t"->unitTextView.setText("${value.toDouble()*1e-6}")
+                    "lb"->unitTextView.setText("${value.toDouble()*2.2046e-3}")
                 }
             }
             "kg"->{
                 when(unit2){
-                    "mg"->unitTextView.setText("${value.toInt()*1e+6}")
-                    "g"->unitTextView.setText("${value.toInt()*1000}")
+                    "mg"->unitTextView.setText("${value.toDouble()*1e+6}")
+                    "g"->unitTextView.setText("${value.toDouble()*1000}")
                     "kg"->unitTextView.setText(value)
-                    "t"->unitTextView.setText("${value.toInt()*0.001}")
-                    "lb"->unitTextView.setText("${value.toInt()*2.20462}")
+                    "t"->unitTextView.setText("${value.toDouble()*0.001}")
+                    "lb"->unitTextView.setText("${value.toDouble()*2.20462}")
                 }
             }
             "t"->{
                 when(unit2){
-                    "mg"->unitTextView.setText("${value.toInt()*1e+9}")
-                    "g"->unitTextView.setText("${value.toInt()*1e+6}")
-                    "kg"->unitTextView.setText("${value.toInt()*1000}")
+                    "mg"->unitTextView.setText("${value.toDouble()*1e+9}")
+                    "g"->unitTextView.setText("${value.toDouble()*1e+6}")
+                    "kg"->unitTextView.setText("${value.toDouble()*1000}")
                     "t"->unitTextView.setText(value)
-                    "lb"->unitTextView.setText("${value.toInt()*2204.62}")
+                    "lb"->unitTextView.setText("${value.toDouble()*2204.62}")
                 }
             }
             "lb"->{
                 when(unit2){
-                    "mg"->unitTextView.setText("${value.toInt()*453592}")
-                    "g"->unitTextView.setText("${value.toInt()*453.592}")
-                    "kg"->unitTextView.setText("${value.toInt()*0.453592}")
-                    "t"->unitTextView.setText("${value.toInt()*4.53592e-4}")
+                    "mg"->unitTextView.setText("${value.toDouble()*453592}")
+                    "g"->unitTextView.setText("${value.toDouble()*453.592}")
+                    "kg"->unitTextView.setText("${value.toDouble()*0.453592}")
+                    "t"->unitTextView.setText("${value.toDouble()*4.53592e-4}")
                     "lb"->unitTextView.setText(value)
                 }
             }

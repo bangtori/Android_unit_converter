@@ -90,6 +90,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:padding="15dp"
+            android:inputType="numberDecimal"
             app:layout_constraintBottom_toTopOf="@+id/unit1Spinner"
             app:layout_constraintEnd_toStartOf="@id/equalTextView"
             app:layout_constraintStart_toStartOf="parent"
